@@ -23,6 +23,7 @@ public class register extends AppCompatActivity {
     //Setup view components
     Button register;
     EditText username, password;
+    //helper myHelper = new helper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +102,11 @@ public class register extends AppCompatActivity {
         }
 
         public void popTextBox() {
-            Log.d("personal","reach5");
-            Toast.makeText(getApplicationContext(), gbl_str, Toast.LENGTH_LONG).show();
+            Log.d("personal", "reach5");
+            //Toast.makeText(getApplicationContext(), gbl_str, Toast.LENGTH_LONG).show();
+            helper.toastMaker(getApplicationContext(),gbl_str);
+            helper.httpPost myPost = new helper().new httpPost();
+            myPost.execute();
 
         }
     }
