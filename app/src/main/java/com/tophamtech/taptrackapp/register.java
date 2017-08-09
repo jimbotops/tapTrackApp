@@ -1,6 +1,5 @@
 package com.tophamtech.taptrackapp;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -45,13 +43,21 @@ public class register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Clicked button by: " + username.getText() + password.getText(), Toast.LENGTH_LONG).show();
-                popTextBox();
+                String userData[][] = {{"username", username.getText().toString()}, {"password", password.getText().toString()}};
+                rest.httpPost post = new rest().new httpPost();
+                post.execute(userData);
+                //helper.toastMaker(getApplicationContext(),post.execute(userData));
             }
         });
     }
 
-        public void popTextBox() {
-            helper.httpPost myPost = new helper().new httpPost();
-            myPost.execute();
+    public class sessionCreator {
+        String jwtMessage;
+
+        public void setJWT(String msg){
+            jwtMessage = msg;
+            Log.d("tester",jwtMessage);
         }
+    }
+
     }
