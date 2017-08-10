@@ -86,7 +86,7 @@ public class rest {
                 switch (jObject.getString("id")){
                     case "100":
                         session.setJWT(jObject.getString("token"));
-                        register.validCreds();
+                        signIn.validCreds();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

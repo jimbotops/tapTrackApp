@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class register extends AppCompatActivity {
+public class signIn extends AppCompatActivity {
 
     static Context context;
     //Setup view components
