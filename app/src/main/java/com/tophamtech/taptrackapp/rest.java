@@ -1,7 +1,10 @@
 package com.tophamtech.taptrackapp;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -27,6 +30,12 @@ public class rest {
     public static final String data = "http://tophamtech.noip.me:3000/api/data?tar=targetC";
 
     public class httpPost extends AsyncTask<String[][], Void, String> {
+
+        private Context mContext;
+
+        public httpPost(Context context) {
+            mContext = context;
+        }
 
         private String streamToString(InputStream in) throws IOException {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -87,6 +96,11 @@ public class rest {
                     case "100":
                         session.setJWT(jObject.getString("token"));
                         signIn.validCreds();
+                        break;
+                    default:
+                        signIn signIn = new signIn();
+                        signIn.invalidCreds(mContext, "Error","Incorrect username or password");
+                        break;
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
