@@ -1,5 +1,6 @@
 package com.tophamtech.taptrackapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 
 public class register extends AppCompatActivity {
 
+    static Context context;
     //Setup view components
     Button register;
     EditText username, password;
@@ -21,6 +23,7 @@ public class register extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_sign_in);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,13 +54,8 @@ public class register extends AppCompatActivity {
         });
     }
 
-    public class sessionCreator {
-        String jwtMessage;
-
-        public void setJWT(String msg){
-            jwtMessage = msg;
-            Log.d("tester",jwtMessage);
-        }
+    public static void validCreds() {
+        helper.toastMaker(context,"Valid Credentials:"+ session.getJWT());
     }
 
     }

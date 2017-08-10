@@ -3,6 +3,9 @@ package com.tophamtech.taptrackapp;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -73,8 +76,21 @@ public class rest {
 
         @Override
         protected void onPostExecute(String result) {
-            register.sessionCreator session = new register().new sessionCreator();
-            session.setJWT(result);
+            JSONObject jObject = null;
+            try {
+                jObject = new JSONObject(result);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            try {
+                switch (jObject.getString("id")){
+                    case "100":
+                        session.setJWT(jObject.getString("token"));
+                        register.validCreds();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
     }
 

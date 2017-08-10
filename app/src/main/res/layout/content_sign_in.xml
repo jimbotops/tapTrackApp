@@ -35,7 +35,7 @@
         style="?android:textAppearanceSmall"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/action_register"
+        android:text="@string/action_sign_in_short"
         android:textStyle="bold"
         android:layout_below="@+id/password"
         android:layout_alignParentLeft="true" />
