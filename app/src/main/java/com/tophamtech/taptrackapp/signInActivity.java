@@ -1,27 +1,23 @@
 package com.tophamtech.taptrackapp;
 
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 
-public class signIn extends AppCompatActivity {
+public class signInActivity extends AppCompatActivity {
 
     static Context context;
     //Setup view components
-    Button register;
+    Button register, signInBtn;
     EditText username, password;
 
     @Override
@@ -41,12 +37,13 @@ public class signIn extends AppCompatActivity {
             }
         });
 
+        signInBtn = (Button) findViewById(R.id.signIn);
         register = (Button) findViewById(R.id.register);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
-        final signIn me = this;
+        final signInActivity me = this;
 
-        register.setOnClickListener(new View.OnClickListener() {
+        signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(), "Clicked button by: " + username.getText() + password.getText(), Toast.LENGTH_LONG).show();
@@ -56,6 +53,14 @@ public class signIn extends AppCompatActivity {
                 //helper.toastMaker(getApplicationContext(),post.execute(userData));
             }
         });
+
+        register.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                helper.toastMaker(context, "RegisterMe");
+                startActivity(new Intent(context, registerActivity.class));
+            }
+        });
     }
 
     public static void validCreds() {
@@ -63,7 +68,5 @@ public class signIn extends AppCompatActivity {
     }
     public void invalidCreds(Context context, String title, String message) {
         helper.alertMaker(context, "Titleme", "mesme");
-
-        //alertMaker(signIn.this, title, message);
     }
 }

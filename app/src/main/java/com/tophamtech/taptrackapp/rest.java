@@ -1,10 +1,8 @@
 package com.tophamtech.taptrackapp;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.view.View;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -62,8 +60,9 @@ public class rest {
                 serverConnection.setDoOutput(true);
                 serverConnection.setRequestMethod("POST");
                 serverConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                Log.d("me", "startConnect");
                 serverConnection.connect();
-
+                Log.d("me", "endConnect");
                 //Once the connection is open, write the body
                 OutputStreamWriter writer = new OutputStreamWriter(serverConnection.getOutputStream(), "UTF-8");
                 writer.write(params[0][0][0]+"="+params[0][0][1]+"&"+params[0][1][0]+"="+params[0][1][1]);
@@ -74,9 +73,15 @@ public class rest {
                 return streamToString(in);
 
             } catch (ProtocolException e) {
+                Log.d("me","fall1");
+                signInActivity.validCreds();
                 e.printStackTrace();
             } catch (IOException e) {
+                Log.d("me","fall2");
+                signInActivity signIn = new signInActivity();
+                signIn.invalidCreds(mContext, "Error","It appears we're having some technical difficulties.");
                 e.printStackTrace();
+                Log.d("me", e.toString());
             } finally {
                 serverConnection.disconnect();
             }
@@ -95,10 +100,10 @@ public class rest {
                 switch (jObject.getString("id")){
                     case "100":
                         session.setJWT(jObject.getString("token"));
-                        signIn.validCreds();
+                        signInActivity.validCreds();
                         break;
                     default:
-                        signIn signIn = new signIn();
+                        signInActivity signIn = new signInActivity();
                         signIn.invalidCreds(mContext, "Error","Incorrect username or password");
                         break;
                 }
