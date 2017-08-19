@@ -17,7 +17,7 @@ public class signInActivity extends AppCompatActivity {
 
     static Context context;
     //Setup view components
-    Button register, signInBtn;
+    Button registerBtn, signInBtn;
     EditText username, password;
 
     @Override
@@ -38,7 +38,7 @@ public class signInActivity extends AppCompatActivity {
         });
 
         signInBtn = (Button) findViewById(R.id.signIn);
-        register = (Button) findViewById(R.id.register);
+        registerBtn = (Button) findViewById(R.id.register);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
         final signInActivity me = this;
@@ -54,10 +54,9 @@ public class signInActivity extends AppCompatActivity {
             }
         });
 
-        register.setOnClickListener(new View.OnClickListener(){
+        registerBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                helper.toastMaker(context, "RegisterMe");
                 startActivity(new Intent(context, registerActivity.class));
             }
         });
