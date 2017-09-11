@@ -46,10 +46,10 @@ public class signInActivity extends AppCompatActivity {
         signInBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Clicked button by: " + username.getText() + password.getText(), Toast.LENGTH_LONG).show();
                 String userData[][] = {{"username", username.getText().toString()}, {"password", password.getText().toString()}};
+                rest.restParams signInParams = new rest.restParams(userData, "auth");
                 rest.httpPost post = new rest().new httpPost(me);
-                post.execute(userData);
+                post.execute(signInParams);
                 //helper.toastMaker(getApplicationContext(),post.execute(userData));
             }
         });
@@ -62,8 +62,9 @@ public class signInActivity extends AppCompatActivity {
         });
     }
 
-    public static void validCreds() {
+    public void validCreds() {
         helper.toastMaker(context, "Valid Credentials:" + session.getJWT());
+        context.startActivity(new Intent(context, homeActivity.class));
     }
     public void invalidCreds(Context context, String title, String message) {
         helper.alertMaker(context, "Titleme", "mesme");

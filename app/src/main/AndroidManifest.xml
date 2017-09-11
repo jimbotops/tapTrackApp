@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name=".homeActivity"
-            android:label="@string/title_activity_root" >
+            android:label="@string/title_activity_home"
+            android:theme="@style/AppTheme.NoActionBar" >
         </activity>
     </application>
 
