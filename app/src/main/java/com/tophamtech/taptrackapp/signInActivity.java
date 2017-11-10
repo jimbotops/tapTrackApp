@@ -17,7 +17,7 @@ public class signInActivity extends AppCompatActivity {
 
     static Context context;
     //Setup view components
-    Button registerBtn, signInBtn;
+    Button registerBtn, signInBtn, button;
     EditText username, password;
 
     @Override
@@ -41,6 +41,7 @@ public class signInActivity extends AppCompatActivity {
         registerBtn = (Button) findViewById(R.id.register);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+        button = (Button) findViewById(R.id.button);
         final signInActivity me = this;
 
         signInBtn.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +59,12 @@ public class signInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 startActivity(new Intent(context, registerActivity.class));
+            }
+        });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, homeActivity.class));
             }
         });
     }

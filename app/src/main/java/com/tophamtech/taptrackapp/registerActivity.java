@@ -29,7 +29,7 @@ public class registerActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 String userData [][] = {{"username", username.getText().toString()}, {"password", password.getText().toString()},
-                        {"groupId", groupId.getText().toString()}, {"groupPassword", groupPassword.getText().toString()}};
+                        {"group", groupId.getText().toString()}, {"groupCode", groupPassword.getText().toString()}};
 
                 rest.restParams registerParams = new rest.restParams(userData, "setup");
 
