@@ -1,6 +1,7 @@
 package com.tophamtech.taptrackapp;
 
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,15 @@ import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
 public class homeActivity extends AppCompatActivity
     implements widgetFragment.OnFragmentInteractionListener{
 
@@ -22,6 +32,24 @@ public class homeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        String initData;
+        JSONObject parsedData = null,data = null;
+        rest.httpGet getInit = new rest().new httpGet();
+        getInit.execute();
+        try {
+            initData = getInit.get().toString();
+            parsedData = new JSONObject(initData);
+            data = parsedData.getJSONObject("data");
+            //String param = data.getString("sink");
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
 
 
         if (findViewById(R.id.fragmentHolder) != null) {
@@ -33,9 +61,22 @@ public class homeActivity extends AppCompatActivity
             }
             // Create a new Fragment to be placed in the activity layout
             widgetFragment firstFragment = new widgetFragment();
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+            Iterator<String> it = data.keys();
+            Map<String, String> map = new HashMap<String,String>();
+            while (it.hasNext()){
+                String key,value=null;
+                key = it.next();
+                try {
+                    value = data.getString(key);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                map.put(key,value);
+            }
+
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("map", (Serializable) map);
+            firstFragment.setArguments(bundle);
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()

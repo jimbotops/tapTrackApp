@@ -2,15 +2,21 @@ package com.tophamtech.taptrackapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.app.Fragment;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -46,8 +52,32 @@ public class widgetFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragView =  inflater.inflate(R.layout.fragment_widget, container, false);
-        firstUser = (TextView) fragView.findViewById(R.id.firstUser);
-        otherUser = (TextView) fragView.findViewById(R.id.otherUser);
+        GridLayout gLayout = (GridLayout) fragView.findViewById(R.id.gridFrag);
+        Map<String, String> map = (Map<String, String>) this.getArguments().getSerializable("map");
+
+        gLayout.setRowCount(map.size());
+        gLayout.setColumnCount(2);
+
+        int rowCount = 0;
+        for(Map.Entry<String, String> entry : map.entrySet()) {
+            GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+
+            String key = entry.getKey();
+            String value = entry.getValue();
+
+            TextView firstUser = new TextView(getContext());
+            params.columnSpec = GridLayout.spec(1, 1f);
+            params.rowSpec = GridLayout.spec(rowCount);
+            params.setGravity(Gravity.FILL_HORIZONTAL);
+
+            //firstUser.setPadding(3, 3, 3, 3);
+            firstUser.setText(key + " - " + value);
+            firstUser.setBackgroundColor(Color.RED);
+            firstUser.setLayoutParams(params);
+            gLayout.addView(firstUser);
+            rowCount=rowCount+1;
+        }
+
 
         return fragView;
     }

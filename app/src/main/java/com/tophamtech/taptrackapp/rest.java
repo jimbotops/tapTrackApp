@@ -26,6 +26,7 @@ public class rest {
     public static final String auth = "http://tophamtech.noip.me:3000/api/auth/authenticate";
     public static final String setup = "http://tophamtech.noip.me:3000/api/auth/setup";
     public static final String data = "http://tophamtech.noip.me:3000/api/data?tar=targetC";
+    public static final String init = "http://tophamtech.noip.me:3000/api/data/init";
 
     public static class restParams {
         String[][] data;
@@ -143,8 +144,8 @@ public class rest {
     }
 
 
-    public class httpGet extends AsyncTask<Void, Void, Void> {
-        private void streamToString(InputStream in) throws IOException {
+    public class httpGet extends AsyncTask<Void, Void, String> {
+        private String streamToString(InputStream in) throws IOException {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder result = new StringBuilder();
             String line;
@@ -152,13 +153,14 @@ public class rest {
                 result.append(line);
             }
             Log.d("fans", result.toString());
+            return result.toString();
         }
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String doInBackground(Void... params) {
 
             URL url = null;
             try {
-                url = new URL(rest.data);
+                url = new URL(rest.init);
             }
             catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -167,12 +169,12 @@ public class rest {
             try {
                 serverConnection = (HttpURLConnection) url.openConnection();
                 serverConnection.setRequestMethod("GET");
-                serverConnection.setRequestProperty("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwiX2lkIjoiNTk2ZDMxOTA3NzQyMjEyY2U4MDgxNDYxIiwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiX192IjoiaW5pdCIsImdyb3VwQ29kZSI6ImluaXQiLCJncm91cCI6ImluaXQiLCJwYXNzd29yZCI6ImluaXQiLCJ1c2VybmFtZSI6ImluaXQiLCJfaWQiOiJpbml0In0sInN0YXRlcyI6eyJpZ25vcmUiOnt9LCJkZWZhdWx0Ijp7fSwiaW5pdCI6eyJfX3YiOnRydWUsImdyb3VwQ29kZSI6dHJ1ZSwiZ3JvdXAiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwicGF0aHNUb1Njb3BlcyI6e30sImVtaXR0ZXIiOnsiZG9tYWluIjpudWxsLCJfZXZlbnRzIjp7fSwiX21heExpc3RlbmVycyI6MH19LCJpc05ldyI6ZmFsc2UsIl9kb2MiOnsiX192IjowLCJncm91cENvZGUiOiJjIiwiZ3JvdXAiOiJnIiwicGFzc3dvcmQiOiIkMmEkMTAkRHFhVWFQWS85SWlYOExHZjJRdGpZLnQ4Q0lVbUdmdkN1SHZkVlZPeHpuLkhKUnJxZEZwQ1MiLCJ1c2VybmFtZSI6InUiLCJfaWQiOiI1OTZkMzE5MDc3NDIyMTJjZTgwODE0NjEifSwiJGluaXQiOnRydWUsImlhdCI6MTUwMjMwODkwNywiZXhwIjoxNTAyMzEwMzQ3fQ.n_zDaPUZ0HaiBEdMvVRrv6hJTBSR5RC7_3KNt7ht7Ro");
+                serverConnection.setRequestProperty("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwiX2lkIjoiNWEwOThhZTZhNTMwNTE0NjRhZjNhODdhIiwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiX192IjoiaW5pdCIsImdyb3VwQ29kZSI6ImluaXQiLCJncm91cCI6ImluaXQiLCJwYXNzd29yZCI6ImluaXQiLCJ1c2VybmFtZSI6ImluaXQiLCJfaWQiOiJpbml0In0sInN0YXRlcyI6eyJpZ25vcmUiOnt9LCJkZWZhdWx0Ijp7fSwiaW5pdCI6eyJfX3YiOnRydWUsImdyb3VwQ29kZSI6dHJ1ZSwiZ3JvdXAiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwicGF0aHNUb1Njb3BlcyI6e30sImVtaXR0ZXIiOnsiZG9tYWluIjpudWxsLCJfZXZlbnRzIjp7fSwiX21heExpc3RlbmVycyI6MH19LCJpc05ldyI6ZmFsc2UsIl9kb2MiOnsiX192IjowLCJncm91cENvZGUiOiIxMjM0IiwiZ3JvdXAiOiIxMjM0IiwicGFzc3dvcmQiOiIkMmEkMTAkM25BT3FDekJzR2NJUFlKcHRzaVdPdTNLVG94SVVIci5ta1E1anI2ZlguS21tbUNDSFpBYmkiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsIl9pZCI6IjVhMDk4YWU2YTUzMDUxNDY0YWYzYTg3YSJ9LCIkaW5pdCI6dHJ1ZSwiaWF0IjoxNTEwNTkzMjk4LCJleHAiOjE1MTA1OTQ3Mzh9.rvIIHimYrKTHBY7hJK6SzHp6enIgf3sasA3L6fUcc_k");
                 serverConnection.connect();
 
                 //read back the server response
                 InputStream in = new BufferedInputStream(serverConnection.getInputStream());
-                streamToString(in);
+                return streamToString(in);
 
             } catch (ProtocolException e) {
                 e.printStackTrace();
@@ -181,7 +183,7 @@ public class rest {
             } finally {
                 serverConnection.disconnect();
             }
-            return null;
+            return "Error";
         }
     }
 }
