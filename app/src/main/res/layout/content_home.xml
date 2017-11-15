@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
     android:id="@+id/fragmentHolder"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -12,9 +12,29 @@
     tools:showIn="@layout/activity_home" tools:context="com.tophamtech.taptrackapp.homeActivity"
     android:background="#cdc9c9">
 
-    <!--<fragment android:name="com.tophamtech.taptrackapp.widgetFragment"-->
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
         <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--tools:layout="@layout/fragment_widget" />-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<fragment android:name="com.tophamtech.taptrackapp.widgetFragment"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--tools:layout="@layout/fragment_widget" />-->
+
+    <!--</LinearLayout>-->
+
+    <!--<LinearLayout-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <!--<fragment-->
+            <!--tools:layout="@layout/fragment_widget"-->
+            <!--android:name="com.tophamtech.taptrackapp.widgetFragment"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/fragment" />-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

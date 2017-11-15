@@ -53,11 +53,20 @@ public class widgetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragView =  inflater.inflate(R.layout.fragment_widget, container, false);
         GridLayout gLayout = (GridLayout) fragView.findViewById(R.id.gridFrag);
-        Map<String, String> map = (Map<String, String>) this.getArguments().getSerializable("map");
+        Map<String, String> map = (Map<String, String>) this.getArguments().getSerializable("currentTarget");
 
         gLayout.setRowCount(map.size());
         gLayout.setColumnCount(2);
 
+        //Format the image view
+        View targetImage = fragView.findViewById(R.id.targetImage);
+        GridLayout.LayoutParams imageParams = new GridLayout.LayoutParams();
+        imageParams.columnSpec = GridLayout.spec(0,1,1f);
+        imageParams.rowSpec = GridLayout.spec(0,map.size());
+        imageParams.setGravity(Gravity.FILL);
+        targetImage.setLayoutParams(imageParams);
+
+        //Format the text
         int rowCount = 0;
         for(Map.Entry<String, String> entry : map.entrySet()) {
             GridLayout.LayoutParams params = new GridLayout.LayoutParams();
@@ -70,23 +79,15 @@ public class widgetFragment extends Fragment {
             params.rowSpec = GridLayout.spec(rowCount);
             params.setGravity(Gravity.FILL_HORIZONTAL);
 
-            //firstUser.setPadding(3, 3, 3, 3);
+            firstUser.setPadding(3, 3, 3, 3);
             firstUser.setText(key + " - " + value);
-            firstUser.setBackgroundColor(Color.RED);
+            firstUser.setTextAppearance(R.style.smallText);
             firstUser.setLayoutParams(params);
             gLayout.addView(firstUser);
             rowCount=rowCount+1;
         }
 
-
         return fragView;
-    }
-
-    public void onButtonPressed() {
-        if (mListener != null) {
-            Toast.makeText(getContext(), "You clicked on OK", Toast.LENGTH_SHORT).show();
-            tester.setText("changed");
-        }
     }
 
     @Override
