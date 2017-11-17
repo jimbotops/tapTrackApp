@@ -1,6 +1,6 @@
 package com.tophamtech.taptrackapp;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-public class registerActivity extends ActionBarActivity {
+public class registerActivity extends AppCompatActivity {
 
     Button registerBtn;
     EditText username, password, groupId, groupPassword;
