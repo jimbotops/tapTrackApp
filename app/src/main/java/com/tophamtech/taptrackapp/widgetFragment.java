@@ -30,7 +30,7 @@ import java.util.Map;
 public class widgetFragment extends Fragment {
 
     public static Button tester;
-    public static TextView firstUser, otherUser;
+    public static TextView firstCard, otherUser;
     private OnFragmentInteractionListener mListener;
 
     public static widgetFragment newInstance() {
@@ -74,16 +74,16 @@ public class widgetFragment extends Fragment {
             String key = entry.getKey();
             String value = entry.getValue();
 
-            TextView firstUser = new TextView(getContext());
+            TextView firstCard = new TextView(getContext());
             params.columnSpec = GridLayout.spec(1, 1f);
             params.rowSpec = GridLayout.spec(rowCount);
             params.setGravity(Gravity.FILL_HORIZONTAL);
 
-            firstUser.setPadding(3, 3, 3, 3);
-            firstUser.setText(key + " - " + value);
-            firstUser.setTextAppearance(R.style.smallText);
-            firstUser.setLayoutParams(params);
-            gLayout.addView(firstUser);
+            firstCard.setPadding(3, 3, 3, 3);
+            firstCard.setText(key + " - " + value);
+            firstCard.setTextAppearance(R.style.smallText);
+            firstCard.setLayoutParams(params);
+            gLayout.addView(firstCard);
             rowCount=rowCount+1;
         }
 

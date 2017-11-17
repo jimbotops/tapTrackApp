@@ -15,6 +15,7 @@ public class helper extends Application{
         Toast.makeText(context, showMsg, Toast.LENGTH_LONG).show();
     }
 
+
     public static void alertMaker(Context context, String title, String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
         alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_APPLICATION_PANEL);

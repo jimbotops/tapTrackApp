@@ -80,9 +80,7 @@ public class rest {
                 serverConnection.setDoOutput(true);
                 serverConnection.setRequestMethod("POST");
                 serverConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                Log.d("me", "startConnect");
                 serverConnection.connect();
-                Log.d("me", "endConnect");
                 //Once the connection is open, write the body
                 OutputStreamWriter writer = new OutputStreamWriter(serverConnection.getOutputStream(), "UTF-8");
                 StringBuilder sbData = new StringBuilder();
@@ -130,7 +128,7 @@ public class rest {
             try {
                 switch (jObject.getString("id")){
                     case "100":
-                        session.setJWT(jObject.getString("token"));
+                        session.setJWT(jObject.getString("token"),mContext);
                         signIn.validCreds();
                         break;
                     default:
@@ -144,7 +142,15 @@ public class rest {
     }
 
 
+
     public class httpGet extends AsyncTask<Void, Void, String> {
+
+        private Context mContext;
+
+        public httpGet(Context context) {
+            mContext = context;
+        }
+
         private String streamToString(InputStream in) throws IOException {
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             StringBuilder result = new StringBuilder();
@@ -157,6 +163,7 @@ public class rest {
         }
         @Override
         protected String doInBackground(Void... params) {
+            String jwt = session.getJWT(mContext);
 
             URL url = null;
             try {
@@ -169,7 +176,7 @@ public class rest {
             try {
                 serverConnection = (HttpURLConnection) url.openConnection();
                 serverConnection.setRequestMethod("GET");
-                serverConnection.setRequestProperty("x-access-token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyIkX18iOnsic3RyaWN0TW9kZSI6dHJ1ZSwic2VsZWN0ZWQiOnt9LCJnZXR0ZXJzIjp7fSwiX2lkIjoiNWEwYWMxYzlhNTMwNTE0NjRhZjNhODg0Iiwid2FzUG9wdWxhdGVkIjpmYWxzZSwiYWN0aXZlUGF0aHMiOnsicGF0aHMiOnsiX192IjoiaW5pdCIsImdyb3VwQ29kZSI6ImluaXQiLCJncm91cCI6ImluaXQiLCJwYXNzd29yZCI6ImluaXQiLCJ1c2VybmFtZSI6ImluaXQiLCJfaWQiOiJpbml0In0sInN0YXRlcyI6eyJpZ25vcmUiOnt9LCJkZWZhdWx0Ijp7fSwiaW5pdCI6eyJfX3YiOnRydWUsImdyb3VwQ29kZSI6dHJ1ZSwiZ3JvdXAiOnRydWUsInBhc3N3b3JkIjp0cnVlLCJ1c2VybmFtZSI6dHJ1ZSwiX2lkIjp0cnVlfSwibW9kaWZ5Ijp7fSwicmVxdWlyZSI6e319LCJzdGF0ZU5hbWVzIjpbInJlcXVpcmUiLCJtb2RpZnkiLCJpbml0IiwiZGVmYXVsdCIsImlnbm9yZSJdfSwicGF0aHNUb1Njb3BlcyI6e30sImVtaXR0ZXIiOnsiZG9tYWluIjpudWxsLCJfZXZlbnRzIjp7fSwiX21heExpc3RlbmVycyI6MH19LCJpc05ldyI6ZmFsc2UsIl9kb2MiOnsiX192IjowLCJncm91cENvZGUiOiIxMjM0IiwiZ3JvdXAiOiIxMjM0IiwicGFzc3dvcmQiOiIkMmEkMTAkM3Rzcm94MzRrOXZYNHRDNTBDL2JYZW9DOC83ckduLmhjMmo0VFQ2bDBMZjVTMHFDMGN3RzYiLCJ1c2VybmFtZSI6InRlc3R1c2VyMiIsIl9pZCI6IjVhMGFjMWM5YTUzMDUxNDY0YWYzYTg4NCJ9LCIkaW5pdCI6dHJ1ZSwiaWF0IjoxNTEwNzg0MzQ0LCJleHAiOjE1MTA3ODU3ODR9.SQGhhQP05MpyJS4h0ZBmq0A4Cl8l9wNnuJnCVa1vc4Y");
+                serverConnection.setRequestProperty("x-access-token", jwt);
                 serverConnection.connect();
 
                 //read back the server response

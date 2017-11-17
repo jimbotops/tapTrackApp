@@ -2,6 +2,7 @@ package com.tophamtech.taptrackapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -25,52 +26,60 @@ public class signInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         context = getApplicationContext();
         setContentView(R.layout.activity_sign_in);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        SharedPreferences sharedpreferences = this.getSharedPreferences("localStorage", Context.MODE_PRIVATE);
+        String jwtStartup = sharedpreferences.getString("jwt","no_jwt");
+        if (!jwtStartup.equals("no_jwt")){
+            startActivity(new Intent(context, homeActivity.class));
+        }
+        else {
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
 
-        signInBtn = (Button) findViewById(R.id.signIn);
-        registerBtn = (Button) findViewById(R.id.register);
-        username = (EditText) findViewById(R.id.username);
-        password = (EditText) findViewById(R.id.password);
-        button = (Button) findViewById(R.id.button);
-        final signInActivity me = this;
+            FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
+                }
+            });
 
-        signInBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String userData[][] = {{"username", username.getText().toString()}, {"password", password.getText().toString()}};
-                rest.restParams signInParams = new rest.restParams(userData, "auth");
-                rest.httpPost post = new rest().new httpPost(me);
-                post.execute(signInParams);
-                //helper.toastMaker(getApplicationContext(),post.execute(userData));
-            }
-        });
+            signInBtn = (Button) findViewById(R.id.signIn);
+            registerBtn = (Button) findViewById(R.id.register);
+            username = (EditText) findViewById(R.id.username);
+            password = (EditText) findViewById(R.id.password);
+            button = (Button) findViewById(R.id.button);
+            final signInActivity me = this;
 
-        registerBtn.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                startActivity(new Intent(context, registerActivity.class));
-            }
-        });
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(context, homeActivity.class));
-            }
-        });
+            signInBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String userData[][] = {{"username", username.getText().toString()}, {"password", password.getText().toString()}};
+                    rest.restParams signInParams = new rest.restParams(userData, "auth");
+                    rest.httpPost post = new rest().new httpPost(me);
+                    post.execute(signInParams);
+                    //helper.toastMaker(getApplicationContext(),post.execute(userData));
+                }
+            });
+
+            registerBtn.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    startActivity(new Intent(context, registerActivity.class));
+                }
+            });
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(context, homeActivity.class));
+                }
+            });
+        }
     }
 
     public void validCreds() {
-        helper.toastMaker(context, "Valid Credentials:" + session.getJWT());
+        helper.toastMaker(context, "Valid Credentials:" + session.getJWT(context));
         context.startActivity(new Intent(context, homeActivity.class));
     }
     public void invalidCreds(Context context, String title, String message) {

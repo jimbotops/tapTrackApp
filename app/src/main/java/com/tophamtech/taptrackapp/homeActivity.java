@@ -1,5 +1,7 @@
 package com.tophamtech.taptrackapp;
 
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,11 +37,20 @@ public class homeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         String initData;
         JSONObject parsedData = null,data = null;
-        rest.httpGet getInit = new rest().new httpGet();
+        rest.httpGet getInit = new rest().new httpGet(this);
         getInit.execute();
+        Context context = homeActivity.this;
+
         try {
             initData = getInit.get().toString();
             parsedData = new JSONObject(initData);
+            int id = parsedData.getInt("id");
+            if (id == 105) {
+                startActivity(new Intent(context, signInActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                session.clearJWT(context);
+                finish();
+                return;
+            }
             data = parsedData.getJSONObject("data");
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -49,13 +60,10 @@ public class homeActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-
-
         if (findViewById(R.id.fragmentHolder) != null) {
             if (savedInstanceState != null) {
                 return;
             }
-
             //Put all data in initial map
             Iterator<String> it = data.keys();
             Map<String, String> map = new HashMap<String,String>();
@@ -85,7 +93,7 @@ public class homeActivity extends AppCompatActivity
                 }
                 bundle.putSerializable(target,(Serializable)localMap);
             }
-                bundle.putSerializable("targets",targetList);
+            bundle.putSerializable("targets",targetList);
 
             //Needs a code cleanup but...putting everything useful in a global bundle
             //then calling the fragment multiple times with a local bundle made of parts of global bundle
@@ -96,10 +104,10 @@ public class homeActivity extends AppCompatActivity
                 LinearLayout row = new LinearLayout(this);
                 //Setup row layout
                 LinearLayout.LayoutParams llParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                row.setPadding(0,0,0,10);
                 row.setLayoutParams(llParams);
                 //noinspection ResourceType
                 row.setId(rowCounter);
-
                 fragHolder.addView(row);
                 Bundle localBundle = new Bundle();
                 localBundle.putSerializable("currentTarget",bundle.getSerializable(target));
