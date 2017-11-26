@@ -14,44 +14,62 @@
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/prompt_username"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:hint="@string/prompt_username"
+        android:textAlignment="center" />
+
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/username"
+        android:layout_alignStart="@id/username"
+        android:layout_below="@+id/username"
         android:hint="@string/prompt_password"
         android:inputType="textPassword"
         android:maxLines="1"
         android:singleLine="true"
-        android:layout_below="@+id/username"
-        android:layout_alignParentStart="true" />
+        android:textAlignment="center" />
+
     <Button
         android:id="@+id/signIn"
         style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/action_sign_in"
-        android:textStyle="bold"
         android:layout_below="@+id/password"
-        android:layout_alignParentStart="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/main_button"
+        android:minWidth="200dp"
+        android:text="@string/action_sign_in"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
     <Button
         android:id="@+id/register"
         style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_register"
-        android:textStyle="bold"
-        android:layout_below="@+id/signIn"
-        android:layout_alignParentStart="true" />
-
-    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
+        android:layout_alignEnd="@+id/signIn"
+        android:layout_alignStart="@+id/signIn"
+        android:layout_below="@+id/signIn"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/main_button"
+        android:text="@string/action_register"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
+
+    <Button
         android:id="@+id/button"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/register"
+        android:background="@drawable/main_button"
+        android:text="New Button"
+        android:textColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>
