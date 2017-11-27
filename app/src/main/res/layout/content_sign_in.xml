@@ -44,6 +44,8 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/main_button"
         android:minWidth="200dp"
+        android:minHeight="1dp"
+        android:padding="10dp"
         android:text="@string/action_sign_in"
         android:textColor="@color/colorPrimaryDark"
         android:textStyle="bold" />
@@ -56,6 +58,8 @@
         android:layout_alignEnd="@+id/signIn"
         android:layout_alignStart="@+id/signIn"
         android:layout_below="@+id/signIn"
+        android:minHeight="1dp"
+        android:padding="10dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/main_button"
         android:text="@string/action_register"
@@ -64,12 +68,18 @@
 
     <Button
         android:id="@+id/button"
+        style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/register"
+        android:layout_alignEnd="@+id/signIn"
+        android:layout_alignStart="@+id/signIn"
+        android:layout_below="@+id/register"
+        android:minHeight="1dp"
+        android:padding="10dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/main_button"
-        android:text="New Button"
-        android:textColor="@color/colorPrimaryDark" />
+        android:text="Write"
+        android:textColor="@color/colorPrimaryDark"
+        android:textStyle="bold" />
 
 </RelativeLayout>

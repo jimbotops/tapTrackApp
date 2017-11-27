@@ -23,6 +23,7 @@
     <string name="action_register">Register</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_newTag">Add a new tag</string>
     <string name="title_activity_root">rootActivity</string>
 
     <string name="hello_world">Hello world!</string>

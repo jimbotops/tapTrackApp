@@ -3,6 +3,11 @@ package com.tophamtech.taptrackapp;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.NdefMessage;
+import android.nfc.NdefRecord;
+import android.nfc.Tag;
+import android.nfc.tech.Ndef;
+import android.nfc.tech.NdefFormatable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,10 +27,12 @@ import android.widget.Toast;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -154,6 +161,9 @@ public class homeActivity extends AppCompatActivity
             case R.id.action_settings:
                 helper.toastMaker(this,"Show settings menu");
                 break;
+            case R.id.action_newTag:
+                helper.toastMaker(this,"Show new tag page");
+                createTextMessage("bins");
             case R.id.action_logout:
                 startActivity(new Intent(this, signInActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 session.clearJWT(this);
@@ -163,6 +173,31 @@ public class homeActivity extends AppCompatActivity
 
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public NdefMessage createTextMessage(String content) {
+        try {
+            // Get UTF-8 byte
+            byte[] lang = Locale.getDefault().getLanguage().getBytes("UTF-8");
+            byte[] text = content.getBytes("UTF-8"); // Content in UTF-8
+
+            int langSize = lang.length;
+            int textLength = text.length;
+
+            ByteArrayOutputStream payload = new ByteArrayOutputStream(1 + langSize + textLength);
+            payload.write((byte) (langSize & 0x1F));
+            payload.write(lang, 0, langSize);
+            payload.write(text, 0, textLength);
+            NdefRecord record = new NdefRecord(NdefRecord.TNF_WELL_KNOWN,
+                    NdefRecord.RTD_TEXT, new byte[0],
+                    payload.toByteArray());
+            return new NdefMessage(new NdefRecord[]{record});
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     @Override
