@@ -25,6 +25,11 @@ import java.io.ByteArrayOutputStream;
 import java.util.Locale;
 
 
+// TODO:
+// Read tag on this page should call the rest layer to actually update
+// Register node needs to return an id not just true/false
+// needs better error handling
+
 public class signInActivity extends AppCompatActivity {
 
     static Context context;
@@ -106,6 +111,6 @@ public class signInActivity extends AppCompatActivity {
         context.startActivity(new Intent(context, homeActivity.class));
     }
     public void invalidCreds(Context context, String title, String message) {
-        helper.alertMaker(context, "Titleme", "mesme");
+        helper.alertMaker(context, title, message);
     }
 }

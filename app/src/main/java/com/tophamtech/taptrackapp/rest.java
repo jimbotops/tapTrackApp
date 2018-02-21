@@ -1,6 +1,7 @@
 package com.tophamtech.taptrackapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -41,6 +42,7 @@ public class rest {
     public class httpPost extends AsyncTask<restParams, Void, String> {
 
         private Context mContext;
+        String customError = "none";
 
         public httpPost(Context context) {
             mContext = context;
@@ -78,6 +80,8 @@ public class rest {
             try {
                 serverConnection = (HttpURLConnection) url.openConnection();
                 serverConnection.setDoOutput(true);
+                serverConnection.setConnectTimeout(1000);
+                serverConnection.setReadTimeout(1000);
                 serverConnection.setRequestMethod("POST");
                 serverConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
                 serverConnection.connect();
@@ -100,16 +104,12 @@ public class rest {
                 return streamToString(in);
 
             } catch (ProtocolException e) {
-                signInActivity signIn = new signInActivity();
-                Log.d("me","fall1");
-                signIn.validCreds();
                 e.printStackTrace();
             } catch (IOException e) {
-                signInActivity signIn = new signInActivity();
-                Log.d("me","fall2");
-                signIn.invalidCreds(mContext, "Error","It appears we're having some technical difficulties.");
+                if (e.getMessage().contains("host")){
+                    customError = "connectionIssue";
+                }
                 e.printStackTrace();
-                Log.d("me", e.toString());
             } finally {
                 serverConnection.disconnect();
             }
@@ -120,23 +120,32 @@ public class rest {
         protected void onPostExecute(String result) {
             signInActivity signIn = new signInActivity();
             JSONObject jObject = null;
-            try {
-                jObject = new JSONObject(result);
-            } catch (JSONException e) {
-                e.printStackTrace();
+            if (customError.equals("connectionIssue")) {
+                signIn.invalidCreds(mContext, "Error","It appears we're having some other technical difficulties.");
             }
-            try {
-                switch (jObject.getString("id")){
-                    case "100":
-                        session.setJWT(jObject.getString("token"),mContext);
-                        signIn.validCreds();
-                        break;
-                    default:
-                        signIn.invalidCreds(mContext, "Error","Incorrect username or password");
-                        break;
+            if (result != null) {
+                try {
+                    jObject = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
+                try {
+                    switch (jObject.getString("id")){
+                        case "100":
+                            session.setJWT(jObject.getString("token"),mContext);
+                            signIn.validCreds();
+                            break;
+                        case "107":
+                            helper.toastMaker(mContext, "Successfully signed up!");
+                            mContext.startActivity(new Intent(mContext, signInActivity.class));
+                            break;
+                        default:
+                            signIn.invalidCreds(mContext, "Error","Incorrect username or password");
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
