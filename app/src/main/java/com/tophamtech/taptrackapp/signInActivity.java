@@ -100,14 +100,13 @@ public class signInActivity extends AppCompatActivity {
             if (rawMsgs != null) { // NDEF Message available
                 NdefMessage msg =(NdefMessage) rawMsgs[0];
                 NdefRecord[] ndefRecords = msg.getRecords();
-
                 String payload = new String(ndefRecords[0].getPayload());
-                Toast.makeText(this, payload, Toast.LENGTH_SHORT).show();
+                helper.toastMaker(this, payload);
             }
         }
     }
     public void validCreds() {
-        helper.toastMaker(context, "Valid Credentials:" + session.getJWT(context));
+        helper.toastMaker(context, "Login successful!");
         context.startActivity(new Intent(context, homeActivity.class));
     }
     public void invalidCreds(Context context, String title, String message) {

@@ -38,4 +38,10 @@
             <!--android:id="@+id/fragment" />-->
     <!--</LinearLayout>-->
 
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="createDataSample"
+        android:text="Button" />
 </LinearLayout>

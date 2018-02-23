@@ -39,8 +39,11 @@ import java.util.concurrent.ExecutionException;
 public class homeActivity extends AppCompatActivity
     implements widgetFragment.OnFragmentInteractionListener{
 
+    Button testerBtn;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        testerBtn = (Button) findViewById(R.id.button12);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -49,6 +52,8 @@ public class homeActivity extends AppCompatActivity
         rest.httpGet getInit = new rest().new httpGet(this);
         getInit.execute();
         Context context = homeActivity.this;
+        final homeActivity me = this;
+        // TODO: decode jwt to get username
 
         try {
             initData = getInit.get().toString();
@@ -203,5 +208,15 @@ public class homeActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
         Toast.makeText(getApplicationContext(), "In home", Toast.LENGTH_SHORT).show();
+    }
+
+    public void createDataSample(View view) {
+        String userData[][] = {{"tar", "sink"}};
+
+        rest.restParams registerParams = new rest.restParams(userData, "increment");
+        rest.httpPost post = new rest().new httpPost(this);
+        post.execute(registerParams);
+
+        // to increment - send jwt and target and it increments by 1
     }
 }

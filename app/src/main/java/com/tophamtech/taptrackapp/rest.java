@@ -26,7 +26,8 @@ public class rest {
 
     public static final String auth = "http://tophamtech.noip.me:3000/api/auth/authenticate";
     public static final String setup = "http://tophamtech.noip.me:3000/api/auth/setup";
-    public static final String data = "http://tophamtech.noip.me:3000/api/data?tar=targetC";
+    public static final String data = "http://tophamtech.noip.me:3000/api/data";
+    public static final String increment = "http://tophamtech.noip.me:3000/api/data/increment";
     public static final String init = "http://tophamtech.noip.me:3000/api/data/init";
 
     public static class restParams {
@@ -43,6 +44,7 @@ public class rest {
 
         private Context mContext;
         String customError = "none";
+
 
         public httpPost(Context context) {
             mContext = context;
@@ -68,7 +70,12 @@ public class rest {
                     case "setup" :
                         url = new URL(rest.setup);
                         break;
-
+                    case "data" :
+                        url = new URL(rest.data);
+                        break;
+                    case "increment" :
+                        url = new URL(rest.increment);
+                        break;
                 }
 
             }
@@ -76,9 +83,14 @@ public class rest {
                 e.printStackTrace();
             }
 
+            // TODO: Fix create data button call
             HttpURLConnection serverConnection = null;
             try {
                 serverConnection = (HttpURLConnection) url.openConnection();
+                if (params[0].url.equals("data") || params[0].url.equals("increment")) {
+                    String jwt = session.getJWT(mContext);
+                    serverConnection.setRequestProperty("x-access-token", jwt);
+                }
                 serverConnection.setDoOutput(true);
                 serverConnection.setConnectTimeout(1000);
                 serverConnection.setReadTimeout(1000);
@@ -138,6 +150,11 @@ public class rest {
                         case "107":
                             helper.toastMaker(mContext, "Successfully signed up!");
                             mContext.startActivity(new Intent(mContext, signInActivity.class));
+                            break;
+                        case "115":
+                        case "116":
+                            helper.toastMaker(mContext, "Updated counter");
+                            mContext.startActivity(new Intent(mContext, homeActivity.class));
                             break;
                         default:
                             signIn.invalidCreds(mContext, "Error","Incorrect username or password");
