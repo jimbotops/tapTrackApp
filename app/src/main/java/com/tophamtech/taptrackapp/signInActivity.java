@@ -101,10 +101,20 @@ public class signInActivity extends AppCompatActivity {
                 NdefMessage msg =(NdefMessage) rawMsgs[0];
                 NdefRecord[] ndefRecords = msg.getRecords();
                 String payload = new String(ndefRecords[0].getPayload());
-                helper.toastMaker(this, payload);
+                helper.toastMaker(this, payload.substring(2));
+                incrementTarget(payload.substring(2));
             }
         }
     }
+
+    public void incrementTarget(String target) {
+        String userData[][] = {{"tar", target}};
+
+        rest.restParams registerParams = new rest.restParams(userData, "increment");
+        rest.httpPost post = new rest().new httpPost(this);
+        post.execute(registerParams);
+    }
+
     public void validCreds() {
         helper.toastMaker(context, "Login successful!");
         context.startActivity(new Intent(context, homeActivity.class));

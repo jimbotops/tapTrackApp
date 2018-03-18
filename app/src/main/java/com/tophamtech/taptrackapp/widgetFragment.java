@@ -1,8 +1,11 @@
 package com.tophamtech.taptrackapp;
+/*
+Icons made by https://www.flaticon.com/authors/chris-veigt
+Icons made by https://www.flaticon.com/authors/smashicons
+ */
+
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,9 +16,7 @@ import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -61,10 +62,14 @@ public class widgetFragment extends Fragment {
         //Format the image view
         View targetImage = fragView.findViewById(R.id.targetImage);
         GridLayout.LayoutParams imageParams = new GridLayout.LayoutParams();
-        imageParams.columnSpec = GridLayout.spec(0,1,1f);
+        imageParams.columnSpec = GridLayout.spec(0,1,0.5f);
         imageParams.rowSpec = GridLayout.spec(0,map.size());
-        imageParams.setGravity(Gravity.FILL);
+        //imageParams.setGravity(Gravity.FILL);
         targetImage.setLayoutParams(imageParams);
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+        int pixels = (int) (100 * scale + 0.5f);
+        targetImage.setMinimumHeight(pixels);
+        targetImage.setBackgroundResource(R.drawable.ic_washing_machine);
 
         //Format the text
         int rowCount = 0;
