@@ -153,7 +153,6 @@ public class rest {
                             break;
                         case "115":
                         case "116":
-                            helper.toastMaker(mContext, "Updated counter");
                             mContext.startActivity(new Intent(mContext, homeActivity.class));
                             break;
                         default:

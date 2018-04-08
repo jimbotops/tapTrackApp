@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
@@ -12,32 +16,6 @@
     tools:showIn="@layout/activity_home" tools:context="com.tophamtech.taptrackapp.homeActivity"
     android:background="#cdc9c9">
 
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content">-->
-
-        <!--<fragment android:name="com.tophamtech.taptrackapp.widgetFragment"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--tools:layout="@layout/fragment_widget" />-->
-
-    <!--</LinearLayout>-->
-
-    <!--<LinearLayout-->
-        <!--android:orientation="vertical"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:paddingTop="10px">-->
-
-        <!--<fragment-->
-            <!--tools:layout="@layout/fragment_widget"-->
-            <!--android:name="com.tophamtech.taptrackapp.widgetFragment"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/fragment" />-->
-    <!--</LinearLayout>-->
-
     <Button
         android:id="@+id/button12"
         android:layout_width="match_parent"
@@ -45,3 +23,4 @@
         android:onClick="createDataSample"
         android:text="Button" />
 </LinearLayout>
+</ScrollView>

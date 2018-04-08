@@ -101,8 +101,7 @@ public class signInActivity extends AppCompatActivity {
                 NdefMessage msg =(NdefMessage) rawMsgs[0];
                 NdefRecord[] ndefRecords = msg.getRecords();
                 String payload = new String(ndefRecords[0].getPayload());
-                helper.toastMaker(this, payload.substring(2));
-                incrementTarget(payload.substring(2));
+                incrementTarget(payload.substring(3));
             }
         }
     }

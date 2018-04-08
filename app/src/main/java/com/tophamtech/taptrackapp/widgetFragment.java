@@ -8,6 +8,7 @@ Icons made by https://www.flaticon.com/authors/smashicons
 import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.GridLayout;
 import android.widget.TextView;
 
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -45,6 +47,31 @@ public class widgetFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private int findIcon(String targetName) {
+        switch (targetName) {
+            case "bin":
+                return R.drawable.ic_trash;
+            case "bath":
+                return R.drawable.ic_bathtub;
+            case "washingup":
+                return R.drawable.ic_dishwasher;
+            case "fix":
+                return R.drawable.ic_fixing;
+            case "iron":
+                return R.drawable.ic_iron;
+            case "cooking":
+                return R.drawable.ic_oven;
+            case "tidy":
+                return R.drawable.ic_tidy;
+            case "hoover":
+                return R.drawable.ic_vacuum_cleaner;
+            case "washing":
+                return R.drawable.ic_washing_machine;
+            default :
+                return R.drawable.ic_question_mark;
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +81,16 @@ public class widgetFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View fragView =  inflater.inflate(R.layout.fragment_widget, container, false);
         GridLayout gLayout = (GridLayout) fragView.findViewById(R.id.gridFrag);
-        Map<String, String> map = (Map<String, String>) this.getArguments().getSerializable("currentTarget");
+
+        Set<String> targetSet = this.getArguments().keySet();
+        String[] targetArray = targetSet.toArray(new String[targetSet.size()]);
+        String finalTarget = targetArray[0].split("%%")[1];
+
+        Map<String, String> map = (Map<String, String>) this.getArguments().getSerializable("currentTarget%%"+finalTarget);
+
+//        Set<String> target = this.getArguments().keySet(); String[] targetArray = target.toArray(new String[target.size()]);
+//        String finalTarget = targetArray[0];
+//        String sFinalTarget = finalTarget.split("%%")[1];
 
         gLayout.setRowCount(map.size());
         gLayout.setColumnCount(2);
@@ -62,14 +98,17 @@ public class widgetFragment extends Fragment {
         //Format the image view
         View targetImage = fragView.findViewById(R.id.targetImage);
         GridLayout.LayoutParams imageParams = new GridLayout.LayoutParams();
-        imageParams.columnSpec = GridLayout.spec(0,1,0.5f);
+        imageParams.columnSpec = GridLayout.spec(0,1,0.2f);
         imageParams.rowSpec = GridLayout.spec(0,map.size());
         //imageParams.setGravity(Gravity.FILL);
         targetImage.setLayoutParams(imageParams);
         final float scale = getContext().getResources().getDisplayMetrics().density;
         int pixels = (int) (100 * scale + 0.5f);
         targetImage.setMinimumHeight(pixels);
-        targetImage.setBackgroundResource(R.drawable.ic_washing_machine);
+        //TODO: extract the target from the bundle then case statement to switch
+        Log.d("JT-type",finalTarget);
+
+        targetImage.setBackgroundResource(findIcon(finalTarget));
 
         //Format the text
         int rowCount = 0;

@@ -43,7 +43,6 @@ public class homeActivity extends AppCompatActivity
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        testerBtn = (Button) findViewById(R.id.button12);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -124,7 +123,7 @@ public class homeActivity extends AppCompatActivity
                 row.setId(rowCounter);
                 fragHolder.addView(row);
                 Bundle localBundle = new Bundle();
-                localBundle.putSerializable("currentTarget",bundle.getSerializable(target));
+                localBundle.putSerializable("currentTarget%%"+target,bundle.getSerializable(target));
                 // Create a new Fragment to be placed in the activity layout
                 widgetFragment firstFragment = new widgetFragment();
                 firstFragment.setArguments(localBundle);
