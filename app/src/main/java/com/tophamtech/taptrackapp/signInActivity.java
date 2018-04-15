@@ -102,6 +102,7 @@ public class signInActivity extends AppCompatActivity {
                 NdefRecord[] ndefRecords = msg.getRecords();
                 String payload = new String(ndefRecords[0].getPayload());
                 incrementTarget(payload.substring(3));
+                helper.toastMaker(context, "Yay!, You've tapped "+payload.substring(3));
             }
         }
     }

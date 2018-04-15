@@ -88,10 +88,6 @@ public class widgetFragment extends Fragment {
 
         Map<String, String> map = (Map<String, String>) this.getArguments().getSerializable("currentTarget%%"+finalTarget);
 
-//        Set<String> target = this.getArguments().keySet(); String[] targetArray = target.toArray(new String[target.size()]);
-//        String finalTarget = targetArray[0];
-//        String sFinalTarget = finalTarget.split("%%")[1];
-
         gLayout.setRowCount(map.size());
         gLayout.setColumnCount(2);
 
@@ -100,13 +96,10 @@ public class widgetFragment extends Fragment {
         GridLayout.LayoutParams imageParams = new GridLayout.LayoutParams();
         imageParams.columnSpec = GridLayout.spec(0,1,0.2f);
         imageParams.rowSpec = GridLayout.spec(0,map.size());
-        //imageParams.setGravity(Gravity.FILL);
         targetImage.setLayoutParams(imageParams);
         final float scale = getContext().getResources().getDisplayMetrics().density;
         int pixels = (int) (100 * scale + 0.5f);
         targetImage.setMinimumHeight(pixels);
-        //TODO: extract the target from the bundle then case statement to switch
-        Log.d("JT-type",finalTarget);
 
         targetImage.setBackgroundResource(findIcon(finalTarget));
 
@@ -123,8 +116,8 @@ public class widgetFragment extends Fragment {
             params.rowSpec = GridLayout.spec(rowCount);
             params.setGravity(Gravity.FILL_HORIZONTAL);
 
-            firstCard.setPadding(3, 3, 3, 3);
-            firstCard.setText(key + " - " + value);
+            firstCard.setPadding(3, 15, 3, 3);
+            firstCard.setText("  " + key.toUpperCase() + " : " + value);
             firstCard.setTextAppearance(R.style.smallText);
             firstCard.setLayoutParams(params);
             gLayout.addView(firstCard);
