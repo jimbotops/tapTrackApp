@@ -43,6 +43,7 @@ public class rest {
     public class httpPost extends AsyncTask<restParams, Void, String> {
 
         private Context mContext;
+        private String mTarget;
         String customError = "none";
 
 
@@ -100,6 +101,7 @@ public class rest {
                 //Once the connection is open, write the body
                 OutputStreamWriter writer = new OutputStreamWriter(serverConnection.getOutputStream(), "UTF-8");
                 StringBuilder sbData = new StringBuilder();
+                mTarget = params[0].data[0][1];
                 for (int i=0;i<params[0].data.length;i++)
                 {
                     if (i!=0){
@@ -153,7 +155,11 @@ public class rest {
                             break;
                         case "115":
                         case "116":
-                            mContext.startActivity(new Intent(mContext, homeActivity.class));
+                            // if app already open, just update the fragment other wise start the full activity
+                            // TODO: On increment call, find which target, id target fragment then update data
+                                Intent updateFragIntent = new Intent(mContext, homeActivity.class);
+                                updateFragIntent.putExtra("updateTarget", mTarget);
+                                mContext.startActivity(updateFragIntent);
                             break;
                         default:
                             signIn.invalidCreds(mContext, "Error","Incorrect username or password");

@@ -92,9 +92,11 @@ public class signInActivity extends AppCompatActivity {
         Log.d("JT","resume");
         Intent intent = getIntent();
         readTag(intent);
+        intent = null;
     }
 
     private void readTag(Intent intent) {
+        // Here is where it must be refreshing the page, it is also where the timer should be saved
         if (intent != null && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
             if (rawMsgs != null) { // NDEF Message available

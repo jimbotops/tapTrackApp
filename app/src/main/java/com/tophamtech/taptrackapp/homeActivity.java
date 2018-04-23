@@ -41,6 +41,34 @@ public class homeActivity extends AppCompatActivity
 
     Button testerBtn;
 
+    protected void onNewIntent(Intent incomingIntent) {
+        if (incomingIntent.getExtras() != null) {
+            String updateTarget = incomingIntent.getStringExtra("updateTarget");
+            Fragment oldFragment = getSupportFragmentManager().findFragmentByTag(updateTarget);
+            int oldID = oldFragment.getId();
+            Bundle oldBundle = oldFragment.getArguments();
+            Serializable oldData = oldBundle.getSerializable("currentTarget%%"+updateTarget);
+
+            widgetFragment newFragment = new widgetFragment();
+            Bundle newBundle = new Bundle();
+            String userKey = ((HashMap) oldData).keySet().toArray()[0].toString();
+            String oldValueString = (String) ((HashMap) oldData).get(((HashMap) oldData).keySet().toArray()[0].toString());
+            int oldValueInt = Integer.parseInt(oldValueString);
+            int newValueInt = oldValueInt +1;
+            HashMap<String, String> newHM = new HashMap<>();
+            newHM.put(userKey, Integer.toString(newValueInt));
+
+            //TODO: Bundles don't look right, Need to make hashmap then parse that to serializable - bundle should be currentTarget%%bin={james=1,kas=2}
+                    //Also need to make sure it works with 2 people as well
+            newBundle.putSerializable("currentTarget%%"+updateTarget, (Serializable) newHM);
+            newFragment.setArguments(newBundle);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(oldID, newFragment, updateTarget).commit();
+            getSupportFragmentManager().executePendingTransactions();
+
+        }
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -52,7 +80,9 @@ public class homeActivity extends AppCompatActivity
         getInit.execute();
         Context context = homeActivity.this;
         final homeActivity me = this;
-        // TODO: decode jwt to get username
+
+
+
 
         try {
             initData = getInit.get().toString();
@@ -129,9 +159,12 @@ public class homeActivity extends AppCompatActivity
                 firstFragment.setArguments(localBundle);
                 //noinspection ResourceType
                 getSupportFragmentManager().beginTransaction()
-                        .add(rowCounter, firstFragment).commit();
+                        .add(rowCounter, firstFragment, target).commit();
                 rowCounter = rowCounter+1;
             }
+            //TODO below is useful but not returning anything
+            getSupportFragmentManager().executePendingTransactions();
+            //getSupportFragmentManager().findFragmentByTag("bin")
 
         }
 
@@ -210,7 +243,7 @@ public class homeActivity extends AppCompatActivity
     }
 
     public void createDataSample(View view) {
-        String userData[][] = {{"tar", "sink"}};
+        String userData[][] = {{"tar", "Test"}};
 
         rest.restParams registerParams = new rest.restParams(userData, "increment");
         rest.httpPost post = new rest().new httpPost(this);

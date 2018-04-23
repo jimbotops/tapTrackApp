@@ -94,6 +94,7 @@ public class widgetFragment extends Fragment {
         //Format the image view
         View targetImage = fragView.findViewById(R.id.targetImage);
         GridLayout.LayoutParams imageParams = new GridLayout.LayoutParams();
+        imageParams.leftMargin = imageParams.topMargin = imageParams.bottomMargin = 10;
         imageParams.columnSpec = GridLayout.spec(0,1,0.2f);
         imageParams.rowSpec = GridLayout.spec(0,map.size());
         targetImage.setLayoutParams(imageParams);
@@ -117,7 +118,7 @@ public class widgetFragment extends Fragment {
             params.setGravity(Gravity.FILL_HORIZONTAL);
 
             firstCard.setPadding(3, 15, 3, 3);
-            firstCard.setText("  " + key.toUpperCase() + " : " + value);
+            firstCard.setText("  " +  key.substring(0, 1).toUpperCase() + key.substring(1) + " : " + value);
             firstCard.setTextAppearance(R.style.smallText);
             firstCard.setLayoutParams(params);
             gLayout.addView(firstCard);
