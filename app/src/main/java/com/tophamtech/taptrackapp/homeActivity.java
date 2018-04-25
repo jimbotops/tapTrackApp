@@ -41,6 +41,7 @@ public class homeActivity extends AppCompatActivity
 
     Button testerBtn;
 
+
     protected void onNewIntent(Intent incomingIntent) {
         if (incomingIntent.getExtras() != null) {
             String updateTarget = incomingIntent.getStringExtra("updateTarget");
@@ -51,15 +52,30 @@ public class homeActivity extends AppCompatActivity
 
             widgetFragment newFragment = new widgetFragment();
             Bundle newBundle = new Bundle();
-            String userKey = ((HashMap) oldData).keySet().toArray()[0].toString();
-            String oldValueString = (String) ((HashMap) oldData).get(((HashMap) oldData).keySet().toArray()[0].toString());
+            String username = "";
+            try {
+                username = session.getDecodedJWT(this.getApplicationContext()).getString("username");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String userKey = username;
+            String oldValueString = (String) ((HashMap) oldData).get(userKey);
             int oldValueInt = Integer.parseInt(oldValueString);
             int newValueInt = oldValueInt +1;
             HashMap<String, String> newHM = new HashMap<>();
-            newHM.put(userKey, Integer.toString(newValueInt));
 
-            //TODO: Bundles don't look right, Need to make hashmap then parse that to serializable - bundle should be currentTarget%%bin={james=1,kas=2}
-                    //Also need to make sure it works with 2 people as well
+            for (int i=0; i<((HashMap) oldData).keySet().size(); i++) {
+                if (!((HashMap) oldData).keySet().toArray()[i].equals(username)) {
+                    String user = ((HashMap) oldData).keySet().toArray()[i].toString();
+                    newHM.put(user,((HashMap) oldData).get(user).toString());
+                }
+                else {
+                    newHM.put(userKey, Integer.toString(newValueInt));
+                }
+            }
+//            (HashMap) oldData).keySet().toArray()[0].toString()
+            //TODO need to loop round to identify all users
             newBundle.putSerializable("currentTarget%%"+updateTarget, (Serializable) newHM);
             newFragment.setArguments(newBundle);
             getSupportFragmentManager().beginTransaction()
@@ -243,7 +259,7 @@ public class homeActivity extends AppCompatActivity
     }
 
     public void createDataSample(View view) {
-        String userData[][] = {{"tar", "Test"}};
+        String userData[][] = {{"tar", "washing"}};
 
         rest.restParams registerParams = new rest.restParams(userData, "increment");
         rest.httpPost post = new rest().new httpPost(this);

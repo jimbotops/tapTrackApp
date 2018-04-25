@@ -128,9 +128,11 @@
     <orderEntry type="library" name="com.android.support:support-v4-26.0.0-beta2" level="project" />
     <orderEntry type="library" name="com.android.support:design-26.0.0-beta2" level="project" />
     <orderEntry type="library" name="com.android.support:recyclerview-v7-26.0.0-beta2" level="project" />
+    <orderEntry type="library" name="com.auth0.android:jwtdecode-1.1.1" level="project" />
     <orderEntry type="library" name="com.android.support:support-annotations:26.0.0-beta2@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-solver:1.0.2@jar" level="project" />
     <orderEntry type="library" name="com.android.support.constraint:constraint-layout-1.0.2" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.7@jar" level="project" />
     <orderEntry type="library" name="com.android.support:animated-vector-drawable-26.0.0-beta2" level="project" />
     <orderEntry type="library" name="com.android.support:support-v13-26.0.0-beta2" level="project" />
   </component>

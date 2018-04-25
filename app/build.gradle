@@ -28,4 +28,5 @@ dependencies {
     compile "com.android.support:support-v13:26.0.0-beta2"
     compile "com.android.support:appcompat-v7:26.0.0-beta2"
     compile 'com.android.support:design:26.0.0-beta2'
+    compile 'com.auth0.android:jwtdecode:1.1.1'
 }
