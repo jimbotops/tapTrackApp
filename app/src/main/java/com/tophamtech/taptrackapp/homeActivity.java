@@ -2,6 +2,7 @@ package com.tophamtech.taptrackapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
@@ -96,7 +97,10 @@ public class homeActivity extends AppCompatActivity
         getInit.execute();
         Context context = homeActivity.this;
         final homeActivity me = this;
-
+        final TypedArray styledAttributes = context.getTheme().obtainStyledAttributes(
+                new int[] { android.R.attr.actionBarSize });
+        int mActionBarSize = (int) styledAttributes.getDimension(0, 0);
+        styledAttributes.recycle();
 
 
 
@@ -158,6 +162,7 @@ public class homeActivity extends AppCompatActivity
             //then calling the fragment multiple times with a local bundle made of parts of global bundle
             int rowCounter = 1;
             LinearLayout fragHolder = (LinearLayout) findViewById(R.id.fragmentHolder);
+            fragHolder.setPadding(16, mActionBarSize+16, 16, 16);
             for (String target:targetList) {
                 //create new row for next card fragment
                 LinearLayout row = new LinearLayout(this);
