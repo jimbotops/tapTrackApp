@@ -15,3 +15,13 @@ This app was created to settle a debate, who does more chores.
 ## Backend
 
 To track all of this, I created a backend (cunningly entitled tapTrackApi - https://github.com/jimbotops/tapTrackApi) that this app can talk to. This is a Node-Express server that connects to a MongoDB backend and stores all information about the user as well as the user database so they can log on. 
+
+## Images
+<img src="https://user-images.githubusercontent.com/9968106/49700192-55259e00-fbd3-11e8-8b19-5df816d01a77.png" alt="alt text" width="300" height="600">
+
+Login page, which links to the MongoDB user store
+
+
+<img src="https://user-images.githubusercontent.com/9968106/49700189-55259e00-fbd3-11e8-8833-7e3c3c7e3cef.png" alt="alt text" width="300" height="600">
+
+List of chores with the count of who's done what and how many times. As can be seen here there are 2 users James and Kas who are battling it out
